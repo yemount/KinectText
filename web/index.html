@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Kinect Text Generator in AngularDart</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="packages/web_components/platform.js"></script>
+    <script src="packages/web_components/dart_support.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One|Quicksand:400,700|Shadows+Into+Light|Open+Sans|Raleway:500,900|Electrolize' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  
+  <div ktext>
+    <h3>Kinect Text Generator</h3>
+    <ktext-editor ktexts="ctrl.kTexts">
+    </ktext-editor>
+  </div>
+
+  <script type="application/dart" src="main.dart"></script>
+  <script type="text/javascript" src="packages/browser/dart.js"></script>
+</body>
+</html>

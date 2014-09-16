@@ -1,0 +1,121 @@
+#main-canvas {
+  width: 512px;
+  height: 512px;
+  background-color: yellow;
+  position: relative;
+}
+
+#cursor {
+	color: #2E3D48;
+	font-weight: 100;
+}
+
+#cursor.blinking {
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+#cur-text-container {
+  position: absolute;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#cur-text{
+  display: inline-block
+}
+
+#ktexts {
+  position: absolute;
+}
+
+.ktext {
+  position: absolute;
+}
+
+.text-electrolize{
+  font-family: 'Electrolize'
+}
+
+.text-quicksand{
+  font-family: 'Quicksand'
+}
+
+.text-poiretone{
+  font-family: 'Poiret One'
+}
+
+.text-shadowsintolight{
+  font-family: 'Shadows Into Light'
+}
+
+.text-opensans{
+  font-family: 'Open Sans'
+}
+
+.text-opensanscondensed{
+  font-family: 'Open Sans Condensed'
+}
+
+.text-raleway{
+  font-family: 'Raleway'
+}
+
+.text-vertical{
+  -webkit-transform: rotate(90deg);
+  -webkit-transform-origin: 0% 0%; /* Chrome, Safari, Opera */ 
+  -moz-transform: rotate(90deg);	
+  -moz-transform-origin: 0% 0%;
+}
+
+@keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+    color: black;
+ }
+
+}
+
+@-moz-keyframes blink {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+
+}
+
+@-webkit-keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+
+}
+
+@-ms-keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+
+}
+
+@-o-keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+}

@@ -1,0 +1,42 @@
+<div id="main-canvas" ng-click="editor.handleClick($event)" 
+                      ng-blur="editor.handleBlur($event)"
+                      ng-focus="editor.active = true"
+                      ng-keypress="editor.handleKeyUp($event)" 
+                      tabindex="0">
+  <div id="cur-text-container" 
+          style="left: {{editor.curText.loc.x}}px; 
+                top: {{editor.curText.loc.y}}px;
+                font-family: {{editor.curText.font}}; 
+                font-size: {{editor.curText.size}}pt;"
+          ng-class="{'text-vertical': editor.textVertical}">
+    <span id="cur-text">{{editor.curText.text}}</span>
+    <span id="cursor" class="blinking cursor" 
+          ng-if="editor.active">|</span>
+  </div>
+  <div id="text-container">
+    <span ng-repeat="kText in editor.kTexts"
+          style="left: {{kText.loc.x}}px; 
+                top: {{kText.loc.y}}px;
+                font-family: {{kText.font}}; 
+                font-size: {{kText.size}}pt;"
+          ng-class="{'text-vertical': kText.vertical}"
+          class="ktext">{{kText.text}}</span>
+  </div>
+  <div id="test">TEST!!!!!</div>
+</div>
+<div>
+  font family:
+  <button ng-repeat="font in editor.fonts" 
+          style="font-family: {{font}};"
+          ng-click="editor.setCurFont(font)">
+    {{font}}
+  </button>
+</div>
+<div>
+  font size: {{editor.curFontSize}}
+  <button ng-click="editor.increaseFontSize()">+</button>
+  <button ng-click="editor.decreaseFontSize()">-</button>
+</div>
+<div>
+  font orientation: vertical <input type="checkbox" ng-change="editor.changeTextOrientation()">
+</div>
