@@ -1,0 +1,17 @@
+#main-player {
+  width: 512px;
+  height: 512px;
+  background-color: pink;
+  position: relative;
+}
+
+.ktext {
+  position: absolute;
+}
+
+.text-vertical{
+  -webkit-transform: rotate(90deg);
+  -webkit-transform-origin: 0% 0%; /* Chrome, Safari, Opera */ 
+  -moz-transform: rotate(90deg);	
+  -moz-transform-origin: 0% 0%;
+}

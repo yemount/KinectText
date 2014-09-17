@@ -2,6 +2,7 @@ library ktext_controller;
 
 import 'package:angular/angular.dart';
 import 'dart:html';
+import 'ktext-animation/ktext_animation.dart';
 
 @Controller(
     selector: '[ktext]',
@@ -25,7 +26,18 @@ class KText {
   Point loc;
   int size;
   String font;
+  String id;
+  KTextAnimation anim;
 
-  KText(this.text, this.loc, this.font, this.size, this.vertical);
+  KText(this.text, this.loc, this.font, this.size, this.vertical, this.id);
+  
+  // TODO: set animation with params
+  void commit() {
+    
+  }
+  
+  void setAnimation(KTextAnimation _anim) {
+    anim = _anim;
+  }
 }
 

@@ -3,8 +3,9 @@ library editor;
 import 'package:angular/angular.dart';
 import 'dart:html';
 import '../ktext.dart';
-//import '../ktext-animation/ktext_animation.dart';
-import '../ktext-animation/fade_in_out_animation.dart';
+import '../ktext-animation/fade_in_tween.dart';
+import '../ktext-animation/fade_out_tween.dart';
+import '../ktext-animation/ktext_animation.dart';
 
 /* Use the @Component annotation to indicate that this class is an
  * Angular component.
@@ -50,13 +51,8 @@ class KTextEditorComponent implements ShadowRootAware{
   int curFontSize = 15;
   
   Point cursorLoc = new Point(0, 0);
-  Element root;
   
   onShadowRoot(ShadowRoot shadowRoot){
-    root = shadowRoot.querySelector('#main-canvas');
-    Element elem = root.querySelector('#test');
-    FadeInOutAnimation anim = new FadeInOutAnimation(elem, [2, 0.5, 5, 0.5]);
-    anim.start();
   }
   
   void handleClick(Event e){
@@ -77,11 +73,12 @@ class KTextEditorComponent implements ShadowRootAware{
   
   void commitCurrentText(){
     if(curText == null) {
-      curText = new KText('', cursorLoc + CURSOR_OFFSET, curFont, curFontSize, textVertical);
+      curText = new KText('', cursorLoc + CURSOR_OFFSET, curFont, curFontSize, textVertical, 'ktext${kTexts.length}');
     }
     else if(!curText.text.isEmpty){
+      curText.setAnimation(new KTextAnimation(curText, new FadeInTween('${curText.id}-enter', 1000), new FadeOutTween('${curText.id}-leave', 1000), kTexts.length*1000, 2000));
       kTexts.add(curText);
-      curText = new KText('', cursorLoc + CURSOR_OFFSET, curFont, curFontSize, textVertical);
+      curText = new KText('', cursorLoc + CURSOR_OFFSET, curFont, curFontSize, textVertical, 'ktext${kTexts.length}');
     }
   }
   

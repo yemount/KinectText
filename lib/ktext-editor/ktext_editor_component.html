@@ -22,21 +22,22 @@
           ng-class="{'text-vertical': kText.vertical}"
           class="ktext">{{kText.text}}</span>
   </div>
-  <div id="test">TEST!!!!!</div>
 </div>
 <div>
-  font family:
-  <button ng-repeat="font in editor.fonts" 
-          style="font-family: {{font}};"
-          ng-click="editor.setCurFont(font)">
-    {{font}}
-  </button>
-</div>
-<div>
-  font size: {{editor.curFontSize}}
-  <button ng-click="editor.increaseFontSize()">+</button>
-  <button ng-click="editor.decreaseFontSize()">-</button>
-</div>
-<div>
-  font orientation: vertical <input type="checkbox" ng-change="editor.changeTextOrientation()">
+  <div>
+    font family:
+    <button ng-repeat="font in editor.fonts" 
+            style="font-family: {{font}};"
+            ng-click="editor.setCurFont(font)">
+      {{font}}
+    </button>
+  </div>
+  <div>
+    font size: {{editor.curFontSize}}
+    <button ng-click="editor.increaseFontSize()">+</button>
+    <button ng-click="editor.decreaseFontSize()">-</button>
+  </div>
+  <div>
+    font orientation: vertical <input type="checkbox" ng-change="editor.changeTextOrientation()">
+  </div>
 </div>
