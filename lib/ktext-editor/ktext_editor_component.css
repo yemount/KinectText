@@ -1,6 +1,6 @@
 #main-canvas {
   width: 512px;
-  height: 512px;
+  height: 256px;
   background-color: yellow;
   position: relative;
 }
@@ -34,34 +34,6 @@
 
 .ktext {
   position: absolute;
-}
-
-.text-electrolize{
-  font-family: 'Electrolize'
-}
-
-.text-quicksand{
-  font-family: 'Quicksand'
-}
-
-.text-poiretone{
-  font-family: 'Poiret One'
-}
-
-.text-shadowsintolight{
-  font-family: 'Shadows Into Light'
-}
-
-.text-opensans{
-  font-family: 'Open Sans'
-}
-
-.text-opensanscondensed{
-  font-family: 'Open Sans Condensed'
-}
-
-.text-raleway{
-  font-family: 'Raleway'
 }
 
 .text-vertical{
@@ -118,4 +90,8 @@
  50% {
    color: black;
  }
+}
+
+*:focus {
+    outline: 0;
 }

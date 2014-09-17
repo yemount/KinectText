@@ -5,7 +5,6 @@ import 'package:di/di.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/mock/module.dart';
 import 'package:angular_dart_demo/ktext.dart';
-import 'package:angular_dart_demo/rating/rating_component.dart';
 
 import '../web/main.dart';
 

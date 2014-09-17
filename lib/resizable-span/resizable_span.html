@@ -1,0 +1,21 @@
+<div id="bbox">
+  <div id="nwHandle" class="handle" ng-if="spanCtrl.selected"></div>
+  <div id="nHandle" class="handle" ng-if="spanCtrl.selected"></div>
+  <div id="neHandle" class="handle" ng-if="spanCtrl.selected"></div>
+  <div id="eHandle" class="handle" ng-if="spanCtrl.selected"></div>
+  <div id="seHandle" class="handle" ng-if="spanCtrl.selected"></div>
+  <div id="sHandle" class="handle" ng-if="spanCtrl.selected"></div>
+  <div id="swHandle" class="handle" ng-if="spanCtrl.selected"></div>
+  <div id="wHandle" class="handle" ng-if="spanCtrl.selected"></div>
+</div>
+<span style="left: {{spanCtrl.kText.loc.x}}px; 
+                top: {{spanCtrl.kText.loc.y}}px;
+                font-family: {{spanCtrl.kText.font}}; 
+                font-size: {{spanCtrl.kText.size}}pt;"
+        ng-class="{'text-vertical': spanCtrl.kText.vertical}"
+        class="ktext"
+        ng-focus="spanCtrl.onFocus($event)"
+        ng-blur="spanCtrl.onBlur($event)"
+        tabindex="0"> 
+    {{spanCtrl.kText.text}}
+</span>

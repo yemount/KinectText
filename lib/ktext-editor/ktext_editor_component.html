@@ -2,7 +2,7 @@
                       ng-blur="editor.handleBlur($event)"
                       ng-focus="editor.active = true"
                       ng-keypress="editor.handleKeyUp($event)" 
-                      tabindex="0">
+                      tabindex="1">
   <div id="cur-text-container" 
           style="left: {{editor.curText.loc.x}}px; 
                 top: {{editor.curText.loc.y}}px;
@@ -14,13 +14,7 @@
           ng-if="editor.active">|</span>
   </div>
   <div id="text-container">
-    <span ng-repeat="kText in editor.kTexts"
-          style="left: {{kText.loc.x}}px; 
-                top: {{kText.loc.y}}px;
-                font-family: {{kText.font}}; 
-                font-size: {{kText.size}}pt;"
-          ng-class="{'text-vertical': kText.vertical}"
-          class="ktext">{{kText.text}}</span>
+    <resizable-span ng-repeat="kText in editor.kTexts" ktext="kText"></resizable-span>
   </div>
 </div>
 <div>

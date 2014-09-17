@@ -1,10 +1,3 @@
-#main-player {
-  width: 512px;
-  height: 256px;
-  background-color: pink;
-  position: relative;
-}
-
 .ktext {
   position: absolute;
 }
@@ -14,4 +7,23 @@
   -webkit-transform-origin: 0% 0%; /* Chrome, Safari, Opera */ 
   -moz-transform: rotate(90deg);	
   -moz-transform-origin: 0% 0%;
+}
+
+#bbox {
+  position: absolute;
+}
+
+.bbox-active {
+  border: 1px dashed black;
+}
+
+*:focus {
+    outline: 0;
+}
+
+.handle {
+  background-color: red;
+  width: 5px;
+  height: 5px;
+  position: absolute;
 }
