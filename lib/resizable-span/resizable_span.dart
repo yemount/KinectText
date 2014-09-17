@@ -8,7 +8,8 @@ import '../ktext.dart';
     cssUrl: 'packages/angular_dart_demo/resizable-span/resizable_span.css',
     publishAs: 'spanCtrl')
 class ResizableSpanComponent implements ShadowRootAware{
-  final static int HANDLE_OFFSET = 8;
+  static final int HANDLE_OFFSET = 8;
+  static final int HANDLE_SIZE = 6;
   
   @NgTwoWay('ktext')
   KText kText;
@@ -34,33 +35,37 @@ class ResizableSpanComponent implements ShadowRootAware{
     Rectangle rect = span.getBoundingClientRect();
     bbox.style..width = '${(rect.width).toInt()}px'
               ..height = '${(rect.height).toInt()}px'
-              ..left = '${kText.loc.x}px'
-              ..top = '${kText.loc.y}px';
+              ..left = '0px'
+              ..top = '0px';
     bbox.classes.add('bbox-active');
     placeHandles(rect);
   }
   
   void onBlur(Event e) {
     selected = false;
-    bbox.classes.remove('bbox-active');
   }
   
   void placeHandles(Rectangle rect) {
-    nwHandle.style..left = '${-HANDLE_OFFSET}px'
-                  ..top = '${-HANDLE_OFFSET}px';
-    nHandle.style..left = '${rect.width/2}px'
-                  ..top = '${-HANDLE_OFFSET}px';
-    neHandle.style..left = '${rect.width+HANDLE_OFFSET}px'
-                  ..top = '${-HANDLE_OFFSET}px';
-    eHandle.style..left = '${rect.width+HANDLE_OFFSET}px'
-                  ..top = '${rect.height/2}px';
-    seHandle.style..left = '${rect.width+HANDLE_OFFSET}px'
-                  ..top = '${rect.height+HANDLE_OFFSET}px';
-    sHandle.style..left = '${rect.width/2}px'
-                  ..top = '${rect.height+HANDLE_OFFSET}px';
-    swHandle.style..left = '${-HANDLE_OFFSET}px'
-                  ..top = '${rect.height+HANDLE_OFFSET}px';
-    wHandle.style..left = '${-HANDLE_OFFSET}px'
-                  ..top = '${rect.height/2}px';
+    nwHandle.style..left = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px'
+                  ..top = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px';
+    nHandle.style..left = '${rect.width/2-HANDLE_SIZE/2}px'
+                  ..top = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px';
+    neHandle.style..left = '${rect.width+HANDLE_OFFSET-HANDLE_SIZE/2}px'
+                  ..top = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px';
+    eHandle.style..left = '${rect.width+HANDLE_OFFSET-HANDLE_SIZE/2}px'
+                  ..top = '${rect.height/2-HANDLE_SIZE/2}px';
+    seHandle.style..left = '${rect.width+HANDLE_OFFSET-HANDLE_SIZE/2}px'
+                  ..top = '${rect.height+HANDLE_OFFSET-HANDLE_SIZE/2}px';
+    sHandle.style..left = '${rect.width/2-HANDLE_SIZE/2}px'
+                  ..top = '${rect.height+HANDLE_OFFSET-HANDLE_SIZE/2}px';
+    swHandle.style..left = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px'
+                  ..top = '${rect.height+HANDLE_OFFSET-HANDLE_SIZE/2}px';
+    wHandle.style..left = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px'
+                  ..top = '${rect.height/2-HANDLE_SIZE/2}px';
+  }
+  
+  void activate(String dir) {
+    print(dir);
+    root.addEventListener('move', (event) => print('move'));
   }
 }

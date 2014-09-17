@@ -1,13 +1,3 @@
-<div id="bbox">
-  <div id="nwHandle" class="handle" ng-if="spanCtrl.selected"></div>
-  <div id="nHandle" class="handle" ng-if="spanCtrl.selected"></div>
-  <div id="neHandle" class="handle" ng-if="spanCtrl.selected"></div>
-  <div id="eHandle" class="handle" ng-if="spanCtrl.selected"></div>
-  <div id="seHandle" class="handle" ng-if="spanCtrl.selected"></div>
-  <div id="sHandle" class="handle" ng-if="spanCtrl.selected"></div>
-  <div id="swHandle" class="handle" ng-if="spanCtrl.selected"></div>
-  <div id="wHandle" class="handle" ng-if="spanCtrl.selected"></div>
-</div>
 <span style="left: {{spanCtrl.kText.loc.x}}px; 
                 top: {{spanCtrl.kText.loc.y}}px;
                 font-family: {{spanCtrl.kText.font}}; 
@@ -18,4 +8,16 @@
         ng-blur="spanCtrl.onBlur($event)"
         tabindex="0"> 
     {{spanCtrl.kText.text}}
+  <div id="bbox">
+    <div id="handles" style="display: {{spanCtrl.selected? 'block' : 'none'}};">
+    <div id="nwHandle" class="handle" ng-click="spanCtrl.activate('nw')"></div>
+    <div id="nHandle" class="handle" ng-click="spanCtrl.activate('n')"></div>
+    <div id="neHandle" class="handle" ng-click="spanCtrl.activate('ne')"></div>
+    <div id="eHandle" class="handle" ng-click="spanCtrl.activate('e')"></div>
+    <div id="seHandle" class="handle" ng-click="spanCtrl.activate('se')"></div>
+    <div id="sHandle" class="handle" ng-click="spanCtrl.activate('s')"></div>
+    <div id="swHandle" class="handle" ng-click="spanCtrl.activate('sw')"></div>
+    <div id="wHandle" class="handle" ng-click="spanCtrl.activate('w')"></div>
+    </div>
+  </div>
 </span>

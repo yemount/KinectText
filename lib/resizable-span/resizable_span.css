@@ -23,7 +23,39 @@
 
 .handle {
   background-color: red;
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   position: absolute;
+}
+
+#nwHandle {
+  cursor: nw-resize;
+}
+
+#nHandle {
+  cursor: n-resize;
+}
+
+#neHandle {
+  cursor: ne-resize;
+}
+
+#eHandle {
+  cursor: e-resize;
+}
+
+#seHandle {
+  cursor: se-resize;
+}
+
+#sHandle {
+  cursor: s-resize;
+}
+
+#swHandle {
+  cursor: sw-resize;
+}
+
+#wHandle {
+  cursor: w-resize;
 }
