@@ -3,6 +3,7 @@ version: 0.0.1
 dependencies:
   angular: 0.14.0
   web_components: any
+  vector_math: any
 dev_dependencies:
   unittest: any
 transformers:

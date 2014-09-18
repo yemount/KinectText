@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'dart:html';
 import '../ktext.dart';
+import 'package:vector_math/vector_math.dart';
 
 @Component(
     selector: 'resizable-span',
@@ -8,13 +9,19 @@ import '../ktext.dart';
     cssUrl: 'packages/angular_dart_demo/resizable-span/resizable_span.css',
     publishAs: 'spanCtrl')
 class ResizableSpanComponent implements ShadowRootAware{
-  static final int HANDLE_OFFSET = 8;
-  static final int HANDLE_SIZE = 6;
+  final int hoff = 8;
+  final int hsize = 6;
   
   @NgTwoWay('ktext')
   KText kText;
+  Vector2 curSize = new Vector2(0.0, 0.0);
   ShadowRoot root;
   bool selected = false;
+  int test = 20;
+  Point mouseDownLoc;
+  var mouseMoveStream;
+  var mouseUpStream;
+  
   Element get bbox => root.querySelector('#bbox');
   Element get span => root.querySelector('span');
   Element get nwHandle => root.querySelector('#nwHandle');
@@ -33,39 +40,58 @@ class ResizableSpanComponent implements ShadowRootAware{
   void onFocus(Event e) {
     selected = true;
     Rectangle rect = span.getBoundingClientRect();
-    bbox.style..width = '${(rect.width).toInt()}px'
-              ..height = '${(rect.height).toInt()}px'
-              ..left = '0px'
-              ..top = '0px';
-    bbox.classes.add('bbox-active');
-    placeHandles(rect);
+    curSize..x = rect.width
+            ..y = rect.height;
   }
   
   void onBlur(Event e) {
     selected = false;
   }
   
-  void placeHandles(Rectangle rect) {
-    nwHandle.style..left = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px'
-                  ..top = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px';
-    nHandle.style..left = '${rect.width/2-HANDLE_SIZE/2}px'
-                  ..top = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px';
-    neHandle.style..left = '${rect.width+HANDLE_OFFSET-HANDLE_SIZE/2}px'
-                  ..top = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px';
-    eHandle.style..left = '${rect.width+HANDLE_OFFSET-HANDLE_SIZE/2}px'
-                  ..top = '${rect.height/2-HANDLE_SIZE/2}px';
-    seHandle.style..left = '${rect.width+HANDLE_OFFSET-HANDLE_SIZE/2}px'
-                  ..top = '${rect.height+HANDLE_OFFSET-HANDLE_SIZE/2}px';
-    sHandle.style..left = '${rect.width/2-HANDLE_SIZE/2}px'
-                  ..top = '${rect.height+HANDLE_OFFSET-HANDLE_SIZE/2}px';
-    swHandle.style..left = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px'
-                  ..top = '${rect.height+HANDLE_OFFSET-HANDLE_SIZE/2}px';
-    wHandle.style..left = '${-HANDLE_OFFSET-HANDLE_SIZE/2}px'
-                  ..top = '${rect.height/2-HANDLE_SIZE/2}px';
+  void activate(Event e, String dir) {
+    mouseDownLoc = (e as MouseEvent).client;
+    Point oldLoc = kText.loc;
+    Vector2 oldScale = kText.scale.clone();
+    Vector2 oldSize = curSize.clone();
+    Vector2 newSize = curSize.clone();
+    double newX = kText.loc.x.toDouble();
+    double newY = kText.loc.y.toDouble();
+    mouseMoveStream = document.body.onMouseMove.listen((Event e) { 
+      Point curMouseLoc = (e as MouseEvent).client;
+      Vector2 d = new Vector2(curMouseLoc.x.toDouble() - mouseDownLoc.x, curMouseLoc.y.toDouble() - mouseDownLoc.y);
+      if(dir.contains('n')){
+        newY = oldLoc.y + d.y;
+        newSize.y = oldSize.y - d.y;
+      }
+      if(dir.contains('w')){
+        newX = oldLoc.x + d.x;
+        newSize.x = oldSize.x - d.x;
+      }
+      if(dir.contains('s')){
+        newSize.y = oldSize.y + d.y;
+      }
+      if(dir.contains('e')){
+        newSize.x = oldSize.x + d.x;
+      }
+      //kText.scale.x = (oldScale.x / oldSize.x) * newSize.x;
+      //kText.scale.y = (oldScale.y / oldSize.y) * newSize.y;
+      curSize.x = newSize.x;
+      curSize.y = newSize.y;
+      kText.loc = new Point(newX, newY);
+      span.style..left = '${kText.loc.x}px'
+                ..top = '${kText.loc.y}px';
+    });
+    mouseUpStream = document.body.onMouseUp.listen((Event e) {
+      deactivate(e);
+    });
   }
   
-  void activate(String dir) {
-    print(dir);
-    root.addEventListener('move', (event) => print('move'));
+  void deactivate(Event e) {
+    mouseMoveStream.cancel();
+    mouseUpStream.cancel();
+  }
+  
+  void resize(Point origin, Vector2 scale) {
+    
   }
 }

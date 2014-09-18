@@ -1,23 +1,37 @@
 <span style="left: {{spanCtrl.kText.loc.x}}px; 
                 top: {{spanCtrl.kText.loc.y}}px;
                 font-family: {{spanCtrl.kText.font}}; 
-                font-size: {{spanCtrl.kText.size}}pt;"
+                font-size: {{spanCtrl.kText.size}}pt;
+                -webkit-transform-origin: 0% 0%;
+                -webkit-transform: scale({{spanCtrl.kText.scale.x}}, {{spanCtrl.kText.scale.y}})"
         ng-class="{'text-vertical': spanCtrl.kText.vertical}"
         class="ktext"
         ng-focus="spanCtrl.onFocus($event)"
         ng-blur="spanCtrl.onBlur($event)"
+        unselectable="on"
         tabindex="0"> 
     {{spanCtrl.kText.text}}
-  <div id="bbox">
-    <div id="handles" style="display: {{spanCtrl.selected? 'block' : 'none'}};">
-    <div id="nwHandle" class="handle" ng-click="spanCtrl.activate('nw')"></div>
-    <div id="nHandle" class="handle" ng-click="spanCtrl.activate('n')"></div>
-    <div id="neHandle" class="handle" ng-click="spanCtrl.activate('ne')"></div>
-    <div id="eHandle" class="handle" ng-click="spanCtrl.activate('e')"></div>
-    <div id="seHandle" class="handle" ng-click="spanCtrl.activate('se')"></div>
-    <div id="sHandle" class="handle" ng-click="spanCtrl.activate('s')"></div>
-    <div id="swHandle" class="handle" ng-click="spanCtrl.activate('sw')"></div>
-    <div id="wHandle" class="handle" ng-click="spanCtrl.activate('w')"></div>
+  <div id="handles" style="display: {{spanCtrl.selected ? 'block' : 'none'}};">
+    <div id="bbox" style="left: 0px; 
+                    top: 0px; 
+                    width: {{spanCtrl.curSize.x.toInt()}}px; 
+                    height: {{spanCtrl.curSize.y.toInt()}}px;">
+      <div id="nwHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 'nw')"
+        style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
+      <div id="nHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 'n')"
+        style="left: {{spanCtrl.curSize.x/2-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
+      <div id="neHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 'ne')"
+        style="left: {{spanCtrl.curSize.x+spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
+      <div id="eHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 'e')"
+        style="left: {{spanCtrl.curSize.x+spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y/2-spanCtrl.hsize/2}}px;"></div>
+      <div id="seHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 'se')"
+        style="left: {{spanCtrl.curSize.x+spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y+spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
+      <div id="sHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 's')"
+        style="left: {{spanCtrl.curSize.x/2-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y+spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
+      <div id="swHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 'sw')"
+        style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y+spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
+      <div id="wHandle" class="handle" ng-mousedown="spanCtrl.activate($event, 'w')"
+        style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y/2-spanCtrl.hsize/2}}px;"></div>
     </div>
   </div>
 </span>

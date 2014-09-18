@@ -3,6 +3,7 @@ library ktext_controller;
 import 'package:angular/angular.dart';
 import 'dart:html';
 import 'ktext-animation/ktext_animation.dart';
+import 'package:vector_math/vector_math.dart';
 
 @Controller(
     selector: '[ktext]',
@@ -24,6 +25,7 @@ class KText {
   String text;
   bool vertical;
   Point loc;
+  Vector2 scale = new Vector2(1.0, 1.0);
   int size;
   String font;
   String id;

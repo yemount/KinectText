@@ -11,9 +11,6 @@
 
 #bbox {
   position: absolute;
-}
-
-.bbox-active {
   border: 1px dashed black;
 }
 
@@ -23,8 +20,8 @@
 
 .handle {
   background-color: red;
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
   position: absolute;
 }
 
