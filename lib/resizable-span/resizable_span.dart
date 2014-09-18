@@ -23,7 +23,7 @@ class ResizableSpanComponent implements ShadowRootAware{
   var mouseUpStream;
   
   Element get bbox => root.querySelector('#bbox');
-  Element get span => root.querySelector('span');
+  Element get span => root.querySelector('#text-span');
   Element get nwHandle => root.querySelector('#nwHandle');
   Element get nHandle => root.querySelector('#nHandle');
   Element get neHandle => root.querySelector('#neHandle');
@@ -73,8 +73,9 @@ class ResizableSpanComponent implements ShadowRootAware{
       if(dir.contains('e')){
         newSize.x = oldSize.x + d.x;
       }
-      //kText.scale.x = (oldScale.x / oldSize.x) * newSize.x;
-      //kText.scale.y = (oldScale.y / oldSize.y) * newSize.y;
+      kText.scale.x = (oldScale.x / oldSize.x) * newSize.x;
+      kText.scale.y = (oldScale.y / oldSize.y) * newSize.y;
+      
       curSize.x = newSize.x;
       curSize.y = newSize.y;
       kText.loc = new Point(newX, newY);

@@ -25,6 +25,10 @@
   position: absolute;
 }
 
+#handles {
+  position: absolute;
+}
+
 #nwHandle {
   cursor: nw-resize;
 }
