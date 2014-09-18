@@ -18,20 +18,19 @@ class ResizableSpanComponent implements ShadowRootAware{
   ShadowRoot root;
   bool selected = false;
   int test = 20;
+  
   Point mouseDownLoc;
+  Point mouseDownOrigin;
+  Vector2 mouseDownScale;
+  Vector2 mouseDownSize;
   var mouseMoveStream;
   var mouseUpStream;
   
+  bool handlersInitialized = false;
+  
+  
   Element get bbox => root.querySelector('#bbox');
   Element get span => root.querySelector('#text-span');
-  Element get nwHandle => root.querySelector('#nwHandle');
-  Element get nHandle => root.querySelector('#nHandle');
-  Element get neHandle => root.querySelector('#neHandle');
-  Element get eHandle => root.querySelector('#eHandle');
-  Element get seHandle => root.querySelector('#seHandle');
-  Element get sHandle => root.querySelector('#sHandle');
-  Element get swHandle => root.querySelector('#swHandle');
-  Element get wHandle => root.querySelector('#wHandle');
   
   void onShadowRoot(ShadowRoot root) {
     this.root = root;
@@ -42,57 +41,83 @@ class ResizableSpanComponent implements ShadowRootAware{
     Rectangle rect = span.getBoundingClientRect();
     curSize..x = rect.width
             ..y = rect.height;
+    if(!handlersInitialized) {
+      initHandlers();
+    }
   }
   
   void onBlur(Event e) {
     selected = false;
   }
   
+  void initHandlers() {
+    for(Element handler in bbox.children) {
+      handler.onMouseDown.listen((event) {
+        activate(event, handler.id);
+        event.stopPropagation();
+      }) ;
+    }
+    bbox.onMouseDown.listen((event) {
+      activate(event, "bbox");
+    });
+    
+    handlersInitialized = true;
+  }
+  
   void activate(Event e, String dir) {
-    mouseDownLoc = (e as MouseEvent).client;
-    Point oldLoc = kText.loc;
-    Vector2 oldScale = kText.scale.clone();
-    Vector2 oldSize = curSize.clone();
-    Vector2 newSize = curSize.clone();
-    double newX = kText.loc.x.toDouble();
-    double newY = kText.loc.y.toDouble();
+    saveMouseDownStates(e);
     mouseMoveStream = document.body.onMouseMove.listen((Event e) { 
       Point curMouseLoc = (e as MouseEvent).client;
       Vector2 d = new Vector2(curMouseLoc.x.toDouble() - mouseDownLoc.x, curMouseLoc.y.toDouble() - mouseDownLoc.y);
-      if(dir.contains('n')){
-        newY = oldLoc.y + d.y;
-        newSize.y = oldSize.y - d.y;
-      }
-      if(dir.contains('w')){
-        newX = oldLoc.x + d.x;
-        newSize.x = oldSize.x - d.x;
-      }
-      if(dir.contains('s')){
-        newSize.y = oldSize.y + d.y;
-      }
-      if(dir.contains('e')){
-        newSize.x = oldSize.x + d.x;
-      }
-      kText.scale.x = (oldScale.x / oldSize.x) * newSize.x;
-      kText.scale.y = (oldScale.y / oldSize.y) * newSize.y;
-      
-      curSize.x = newSize.x;
-      curSize.y = newSize.y;
-      kText.loc = new Point(newX, newY);
-      span.style..left = '${kText.loc.x}px'
-                ..top = '${kText.loc.y}px';
+      resize(dir, d);
     });
     mouseUpStream = document.body.onMouseUp.listen((Event e) {
-      deactivate(e);
+      deactivate();
     });
   }
   
-  void deactivate(Event e) {
-    mouseMoveStream.cancel();
-    mouseUpStream.cancel();
+  void saveMouseDownStates(Event e) {
+    mouseDownLoc = (e as MouseEvent).client;
+    mouseDownOrigin = kText.loc;
+    mouseDownScale = kText.scale.clone();
+    mouseDownSize = curSize.clone();
   }
   
-  void resize(Point origin, Vector2 scale) {
+  void resize(String dir, Vector2 d) {
+    double newX = kText.loc.x.toDouble();
+    double newY = kText.loc.y.toDouble();
+    Vector2 newSize = curSize.clone();    
     
+    if(dir.contains('n')){
+      newY = mouseDownOrigin.y + d.y;
+      newSize.y = mouseDownSize.y - d.y;
+    }
+    else if(dir.contains('w')){
+      newX = mouseDownOrigin.x + (kText.vertical ? 0.0 : d.x);
+      newSize.x = mouseDownSize.x - d.x;
+    }
+    else if(dir.contains('s')){
+      newSize.y = mouseDownSize.y + d.y;
+    }
+    else if(dir.contains('e')){
+      newX = mouseDownOrigin.x + (kText.vertical ? d.x : 0.0);
+      newSize.x = mouseDownSize.x + d.x;
+    }
+    else {
+      newX = mouseDownOrigin.x + d.x;
+      newY = mouseDownOrigin.y + d.y;
+    }
+    
+    kText.scale.x = (mouseDownScale.x / mouseDownSize.x) * newSize.x;
+    kText.scale.y = (mouseDownScale.y / mouseDownSize.y) * newSize.y;
+    
+    curSize.x = newSize.x;
+    curSize.y = newSize.y;
+    kText.loc = new Point(newX, newY);
+  }
+  
+  void deactivate() {
+    mouseMoveStream.cancel();
+    mouseUpStream.cancel();
   }
 }

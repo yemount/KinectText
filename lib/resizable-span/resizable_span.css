@@ -12,13 +12,14 @@
 #bbox {
   position: absolute;
   border: 1px dashed black;
+  cursor: move;
 }
 
 *:focus {
     outline: 0;
 }
 
-.handle {
+#bbox div {
   background-color: red;
   width: 10px;
   height: 10px;
@@ -29,34 +30,34 @@
   position: absolute;
 }
 
-#nwHandle {
-  cursor: nw-resize;
-}
-
-#nHandle {
+#n {
   cursor: n-resize;
 }
 
-#neHandle {
+#ne {
   cursor: ne-resize;
 }
 
-#eHandle {
+#e {
   cursor: e-resize;
 }
 
-#seHandle {
+#se {
   cursor: se-resize;
 }
 
-#sHandle {
+#s {
   cursor: s-resize;
 }
 
-#swHandle {
+#sw {
   cursor: sw-resize;
 }
 
-#wHandle {
+#w {
   cursor: w-resize;
+}
+
+#nw {
+  cursor: nw-resize;
 }
