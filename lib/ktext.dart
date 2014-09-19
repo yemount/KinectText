@@ -19,19 +19,42 @@ class KTextController {
     return [
     ];
   }
+  
+  void add(KText kText) {
+    kText.id = getNextId();
+    kTexts.add(kText);
+    kText.registered = true;
+  }
+  
+  String getNextId() {
+    return 'ktext${kTexts.length}';
+  }
 }
 
 class KText {
-  String text;
-  bool vertical;
+  String text = '';
+  bool vertical = false;
   Point loc;
   Vector2 scale = new Vector2(1.0, 1.0);
   int size;
   String font;
   String id;
   KTextAnimation anim;
+  bool editing = true;
+  bool registered = false;
 
-  KText(this.text, this.loc, this.font, this.size, this.vertical, this.id);
+  KText() {
+    size = 15;
+    font = 'Electrolize';
+    loc = new Point(-100, -100);
+    text = '';
+  }
+    
+  KText.fromKText(KText kText) {
+    this..font = kText.font
+        ..size = kText.size
+        ..loc = kText.loc;
+  }
   
   // TODO: set animation with params
   void commit() {

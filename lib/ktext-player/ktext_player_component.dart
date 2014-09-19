@@ -12,15 +12,15 @@ import '../ktext-animation/ktext_animation.dart';
     publishAs: 'player')
     
 class KTextPlayerComponent implements ShadowRootAware{
-  @NgTwoWay('ktexts')
-  List<KText> kTexts;
+  @NgTwoWay('ktctrl')
+  KTextController ktctrl;
   
   onShadowRoot(ShadowRoot shadowRoot){
     KTextAnimation.root = shadowRoot;
   }
   
   void play() {
-    for(KText text in kTexts) {
+    for(KText text in ktctrl.kTexts) {
       text.anim.play();
     }
   }

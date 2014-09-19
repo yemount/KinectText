@@ -1,5 +1,6 @@
 <span ng-focus="spanCtrl.onFocus($event)" 
       ng-blur="spanCtrl.onBlur($event)"
+      ng-click="spanCtrl.onClick($event)"
       style="left: {{spanCtrl.kText.loc.x}}px; 
                   top: {{spanCtrl.kText.loc.y}}px;
                   position: absolute;"
@@ -10,6 +11,7 @@
                   -webkit-transform: scale({{spanCtrl.kText.scale.x}}, {{spanCtrl.kText.scale.y}}) rotate({{spanCtrl.kText.vertical ? 90 : 0}}deg)"
           class="ktext"> 
       {{spanCtrl.kText.text}}
+      <span id="cursor" class="blinking cursor" ng-if="spanCtrl.kText.editing">|</span>
   </span>
   <div id="handles" style="display: {{spanCtrl.selected ? 'block' : 'none'}};">
       <div id="bbox" style="left: {{spanCtrl.kText.vertical ? -spanCtrl.curSize.x.toInt() : 0}}px; 

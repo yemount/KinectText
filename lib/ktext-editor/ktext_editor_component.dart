@@ -38,75 +38,63 @@ import '../ktext-animation/ktext_animation.dart';
     cssUrl: 'packages/angular_dart_demo/ktext-editor/ktext_editor_component.css',
     publishAs: 'editor')
     
-class KTextEditorComponent implements ShadowRootAware{
+class KTextEditorComponent{
   final Point CURSOR_OFFSET = new Point(8, -8); 
-  
-  bool active = false;
-  bool textVertical = false;
-  KText curText;
-  String curFont = "Electrolize";
-  @NgTwoWay('ktexts')
-  List<KText> kTexts;
+  @NgTwoWay('ktctrl')
+  KTextController ktctrl;
   List<String> fonts = ["Electrolize", "Quicksand", "Poiret One", "Shadows Into Light", "Open Sans", "Open Sans Condensed", "Raleway"];
-  int curFontSize = 15;
+  KText curText;
   
-  Point cursorLoc = new Point(0, 0);
-  
-  onShadowRoot(ShadowRoot shadowRoot){
+  KTextEditorComponent() {
+    curText = new KText();
   }
   
-  void handleClick(Event e){
-    cursorLoc = (e as MouseEvent).offset;
-    commitCurrentText();
-    curText.loc = cursorLoc + CURSOR_OFFSET;
+  void onClick(Event e){
+    commitCurrentText(e);
   }
   
-  void handleKeyUp(Event e){
+  void onBlur(Event e){
+    commitCurrentText(e);
+  }
+  
+  void onKeyUp(Event e){
+    if(curText.editing){
       var keyCode = (e as KeyboardEvent).keyCode;
       curText.text += new String.fromCharCode(keyCode);
+    }
   }
   
-  void handleBlur(Event e){
-    active = false;
-    commitCurrentText();
+  void commitCurrentText(Event e){
+    if(!curText.registered && !curText.text.isEmpty){
+      curText.editing = false;
+      curText.setAnimation(new KTextAnimation(curText, new FadeInTween('${curText.id}-enter', 1000), new FadeOutTween('${curText.id}-leave', 1000), ktctrl.kTexts.length*1000, 2000));
+      ktctrl.add(curText);
+    }
+    if(!curText.text.isEmpty) {
+      curText = new KText();
+    }
+    if(e.type == "click") {
+      curText.loc = (e as MouseEvent).offset;
+    }
   }
   
-  void commitCurrentText(){
-    if(curText == null) {
-      curText = new KText('', cursorLoc + CURSOR_OFFSET, curFont, curFontSize, textVertical, 'ktext${kTexts.length}');
-    }
-    else if(!curText.text.isEmpty){
-      curText.setAnimation(new KTextAnimation(curText, new FadeInTween('${curText.id}-enter', 1000), new FadeOutTween('${curText.id}-leave', 1000), kTexts.length*1000, 2000));
-      kTexts.add(curText);
-      curText = new KText('', cursorLoc + CURSOR_OFFSET, curFont, curFontSize, textVertical, 'ktext${kTexts.length}');
-    }
+  void select(KText kText) {
+    curText = kText;
   }
   
   void setCurFont(String font) {
-    curFont = font;
-    if(curText != null) {
-      curText.font = curFont;
-    }
+    curText.font = font;
   }
   
   void increaseFontSize() {
-    curFontSize++;
-    if(curText != null) {
-      curText.size = curFontSize;
-    }
+    curText.size += 1;
   }
   
   void decreaseFontSize() {
-    curFontSize--;    
-    if(curText != null) {
-      curText.size = curFontSize;
-    }
+    curText.size -= 1;
   }
   
   void changeTextOrientation() {
-    textVertical = !textVertical;
-    if(curText != null) {
-      curText.vertical = textVertical;
-    }
+    curText.vertical = !curText.vertical;
   }
 }

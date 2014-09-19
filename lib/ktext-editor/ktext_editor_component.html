@@ -1,20 +1,10 @@
-<div id="main-canvas" ng-click="editor.handleClick($event)" 
-                      ng-blur="editor.handleBlur($event)"
-                      ng-focus="editor.active = true"
-                      ng-keypress="editor.handleKeyUp($event)" 
+<div id="main-canvas" ng-click="editor.onClick($event)" 
+                      ng-blur="editor.onBlur($event)"
+                      ng-keypress="editor.onKeyUp($event)" 
                       tabindex="1">
-  <div id="cur-text-container" 
-          style="left: {{editor.curText.loc.x}}px; 
-                top: {{editor.curText.loc.y}}px;
-                font-family: {{editor.curText.font}}; 
-                font-size: {{editor.curText.size}}pt;"
-          ng-class="{'text-vertical': editor.textVertical}">
-    <span id="cur-text">{{editor.curText.text}}</span>
-    <span id="cursor" class="blinking cursor" 
-          ng-if="editor.active">|</span>
-  </div>
+  <resizable-span ktext="editor.curText" edctrl="editor" ng-if="!editor.curText.registered"></resizable-span>
   <div id="text-container">
-    <resizable-span ng-repeat="kText in editor.kTexts" ktext="kText"></resizable-span>
+    <resizable-span ng-repeat="kText in editor.ktctrl.kTexts" ktext="kText" edctrl="editor"></resizable-span>
   </div>
 </div>
 <div>
@@ -27,11 +17,14 @@
     </button>
   </div>
   <div>
-    font size: {{editor.curFontSize}}
+    font size: {{editor.curText.size}}
     <button ng-click="editor.increaseFontSize()">+</button>
     <button ng-click="editor.decreaseFontSize()">-</button>
   </div>
   <div>
     font orientation: vertical <input type="checkbox" ng-change="editor.changeTextOrientation()">
+  </div>
+  <div>
+    <button ng-if="editor.curText.registered">Animate</button>
   </div>
 </div>

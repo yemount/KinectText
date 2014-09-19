@@ -1,0 +1,132 @@
+.ktext {
+  position: absolute;
+}
+
+#text-span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+
+.text-vertical{
+  -webkit-transform: rotate(90deg);
+  -webkit-transform-origin: 0% 0%; /* Chrome, Safari, Opera */ 
+  -moz-transform: rotate(90deg);	
+  -moz-transform-origin: 0% 0%;
+}
+
+#bbox {
+  position: absolute;
+  border: 1px dashed black;
+  cursor: move;
+}
+
+*:focus {
+    outline: 0;
+}
+
+#bbox div {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+}
+
+#handles {
+  position: absolute;
+}
+
+#n {
+  cursor: n-resize;
+}
+
+#ne {
+  cursor: ne-resize;
+}
+
+#e {
+  cursor: e-resize;
+}
+
+#se {
+  cursor: se-resize;
+}
+
+#s {
+  cursor: s-resize;
+}
+
+#sw {
+  cursor: sw-resize;
+}
+
+#w {
+  cursor: w-resize;
+}
+
+#nw {
+  cursor: nw-resize;
+}
+
+#cursor {
+	color: #2E3D48;
+	font-weight: 100;
+}
+
+#cursor.blinking {
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+
+@keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+    color: black;
+ }
+
+}
+
+@-moz-keyframes blink {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+
+}
+
+@-webkit-keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+
+}
+
+@-ms-keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+
+}
+
+@-o-keyframes "blink" {
+	from,to {
+	color: transparent;
+}
+ 50% {
+   color: black;
+ }
+}

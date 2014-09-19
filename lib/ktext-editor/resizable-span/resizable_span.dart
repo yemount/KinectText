@@ -1,12 +1,13 @@
 import 'package:angular/angular.dart';
 import 'dart:html';
-import '../ktext.dart';
+import '../../ktext.dart';
 import 'package:vector_math/vector_math.dart';
+import '../ktext_editor_component.dart';
 
 @Component(
     selector: 'resizable-span',
-    templateUrl: 'packages/angular_dart_demo/resizable-span/resizable_span.html',
-    cssUrl: 'packages/angular_dart_demo/resizable-span/resizable_span.css',
+    templateUrl: 'packages/angular_dart_demo/ktext-editor/resizable-span/resizable_span.html',
+    cssUrl: 'packages/angular_dart_demo/ktext-editor/resizable-span/resizable_span.css',
     publishAs: 'spanCtrl')
 class ResizableSpanComponent implements ShadowRootAware{
   final int hoff = 8;
@@ -14,9 +15,10 @@ class ResizableSpanComponent implements ShadowRootAware{
   
   @NgTwoWay('ktext')
   KText kText;
+  @NgTwoWay('edctrl')
+  KTextEditorComponent edctrl;
   Vector2 curSize = new Vector2(0.0, 0.0);
   ShadowRoot root;
-  bool selected = false;
   int test = 20;
   
   Point mouseDownLoc;
@@ -26,6 +28,7 @@ class ResizableSpanComponent implements ShadowRootAware{
   var mouseMoveStream;
   var mouseUpStream;
   
+  bool selected = false;
   bool handlersInitialized = false;
   
   
@@ -44,10 +47,15 @@ class ResizableSpanComponent implements ShadowRootAware{
     if(!handlersInitialized) {
       initHandlers();
     }
+    edctrl.select(kText);
   }
   
   void onBlur(Event e) {
     selected = false;
+  }
+  
+  void onClick(Event e) {
+    e.stopPropagation();
   }
   
   void initHandlers() {
@@ -57,7 +65,7 @@ class ResizableSpanComponent implements ShadowRootAware{
         event.stopPropagation();
       }) ;
     }
-    bbox.onMouseDown.listen((event) {
+    bbox..onMouseDown.listen((event) {
       activate(event, "bbox");
     });
     
@@ -72,6 +80,7 @@ class ResizableSpanComponent implements ShadowRootAware{
       resize(dir, d);
     });
     mouseUpStream = document.body.onMouseUp.listen((Event e) {
+      e.stopPropagation();
       deactivate();
     });
   }
@@ -92,18 +101,18 @@ class ResizableSpanComponent implements ShadowRootAware{
       newY = mouseDownOrigin.y + d.y;
       newSize.y = mouseDownSize.y - d.y;
     }
-    else if(dir.contains('w')){
+    if(dir.contains('w')){
       newX = mouseDownOrigin.x + (kText.vertical ? 0.0 : d.x);
       newSize.x = mouseDownSize.x - d.x;
     }
-    else if(dir.contains('s')){
+    if(dir.contains('s')){
       newSize.y = mouseDownSize.y + d.y;
     }
-    else if(dir.contains('e')){
+    if(dir.contains('e')){
       newX = mouseDownOrigin.x + (kText.vertical ? d.x : 0.0);
       newSize.x = mouseDownSize.x + d.x;
     }
-    else {
+    if(!dir.contains('n') && !dir.contains('w') && !dir.contains('s') && !dir.contains('e')) {
       newX = mouseDownOrigin.x + d.x;
       newY = mouseDownOrigin.y + d.y;
     }

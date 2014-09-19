@@ -19,20 +19,7 @@ class KTextAnimation {
   // all css manipulation needs to be done to the shadowroot stylesheet
   CssStyleSheet get stylesheet => root.styleSheets[0] as CssStyleSheet;
   
-  KTextAnimation(this.kText, this.enter, this.leave, this.startTime, this.lastTime){
-    assert(this.kText.id != null);
-    elem = new SpanElement();
-    elem.id = kText.id;
-    elem.classes.add('ktext');
-    if(kText.vertical) {
-      elem.classes.add('text-vertical');
-    }
-    elem.innerHtml = kText.text;
-    elem.style..left = '${kText.loc.x}px'
-              ..top = '${kText.loc.y}px'
-              ..fontFamily = kText.font
-              ..fontSize = '${kText.size}pt';
-  }
+  KTextAnimation(this.kText, this.enter, this.leave, this.startTime, this.lastTime);
   
   void playEnterAnim() {
     elem.classes.add("enter");
@@ -54,7 +41,24 @@ class KTextAnimation {
   }
   
   void play(){
+    makeDomElement();
     new Future.delayed(new Duration(milliseconds: startTime), () => playEnterAnim());
+  }
+  
+  void makeDomElement() {
+    elem = new SpanElement();
+    elem.id = kText.id;
+    elem.classes.add('ktext');
+    if(kText.vertical) {
+      elem.classes.add('text-vertical');
+    }
+    elem.innerHtml = kText.text;
+    elem.style..left = '${kText.loc.x}px'
+              ..top = '${kText.loc.y}px'
+              ..fontFamily = kText.font
+              ..fontSize = '${kText.size}pt'
+              ..transformOrigin = '0% 0%'
+              ..transform = 'scale(${kText.scale.x}, ${kText.scale.y}) rotate(${kText.vertical ? 90 : 0}deg)';
   }
   
   void injectAnim(bool isEnter){
