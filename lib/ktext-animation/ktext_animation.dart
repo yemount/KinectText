@@ -2,8 +2,10 @@ library kTextAnimation;
 
 import 'dart:html';
 import 'dart:async';
-import 'ktext_tween.dart';
 import '../ktext.dart';
+import 'ktext_tween.dart';
+import 'fade_in_tween.dart';
+import 'fade_out_tween.dart';
 
 class KTextAnimation {
   List<Map<String, String>> keyframeStyles;
@@ -18,6 +20,13 @@ class KTextAnimation {
   Element get parent => root.querySelector('#main-player');
   // all css manipulation needs to be done to the shadowroot stylesheet
   CssStyleSheet get stylesheet => root.styleSheets[0] as CssStyleSheet;
+  
+  KTextAnimation.useDefault(this.kText) {
+    enter = new FadeInTween('${kText.id}-enter', 1000);
+    leave = new FadeOutTween('${kText.id}-leave', 1000);
+    startTime = 1*1000;
+    lastTime = 2000;
+  }
   
   KTextAnimation(this.kText, this.enter, this.leave, this.startTime, this.lastTime);
   

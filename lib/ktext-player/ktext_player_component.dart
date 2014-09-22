@@ -21,7 +21,9 @@ class KTextPlayerComponent implements ShadowRootAware{
   
   void play() {
     for(KText text in ktctrl.kTexts) {
-      text.anim.play();
+      if(text.anim != null) {
+        text.anim.play();
+      }
     }
   }
 }

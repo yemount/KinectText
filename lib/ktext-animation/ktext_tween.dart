@@ -1,5 +1,3 @@
-import 'dart:html';
-
 abstract class KTextTween {
   int duration;
   String name;

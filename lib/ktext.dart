@@ -10,6 +10,7 @@ import 'package:vector_math/vector_math.dart';
     publishAs: 'ctrl')
 class KTextController {
   List<KText> kTexts;
+  double maxTime = 10000.0;
 
   KTextController() {
     kTexts = _loadData();
@@ -63,6 +64,7 @@ class KText {
   
   void setAnimation(KTextAnimation _anim) {
     anim = _anim;
+    print(this.anim == null);
   }
 }
 

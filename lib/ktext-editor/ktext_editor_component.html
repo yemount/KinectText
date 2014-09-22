@@ -1,10 +1,17 @@
-<div id="main-canvas" ng-click="editor.onClick($event)" 
-                      ng-blur="editor.onBlur($event)"
-                      ng-keypress="editor.onKeyUp($event)" 
-                      tabindex="1">
-  <resizable-span ktext="editor.curText" edctrl="editor" ng-if="!editor.curText.registered"></resizable-span>
-  <div id="text-container">
-    <resizable-span ng-repeat="kText in editor.ktctrl.kTexts" ktext="kText" edctrl="editor"></resizable-span>
+<div id="canvas-container">
+  <div id="main-canvas" ng-click="editor.onClick($event)" 
+                        ng-blur="editor.onBlur($event)"
+                        ng-keypress="editor.onKeyUp($event)" 
+                        tabindex="1">
+    <resizable-span ktext="editor.curText" edctrl="editor" ng-if="!editor.curText.registered"></resizable-span>
+    <div id="text-container">
+      <resizable-span ng-repeat="kText in editor.ktctrl.kTexts" ktext="kText" edctrl="editor"></resizable-span>
+    </div>
+  </div>
+  <div id="timeline-container">
+    <div ng-repeat="kText in editor.ktctrl.kTexts" >
+      <ktext-timeline ktext="kText" max-time="editor.ktctrl.maxTime" ng-if="kText.anim != null"></ktext-timeline>
+    </div>
   </div>
 </div>
 <div>
@@ -25,6 +32,6 @@
     font orientation: vertical <input type="checkbox" ng-change="editor.changeTextOrientation()">
   </div>
   <div>
-    <button ng-if="editor.curText.registered">Animate</button>
+    <button ng-if="editor.curText.registered" ng-click="editor.animateCurText()">Animate</button>
   </div>
 </div>

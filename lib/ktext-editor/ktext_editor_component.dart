@@ -3,8 +3,6 @@ library editor;
 import 'package:angular/angular.dart';
 import 'dart:html';
 import '../ktext.dart';
-import '../ktext-animation/fade_in_tween.dart';
-import '../ktext-animation/fade_out_tween.dart';
 import '../ktext-animation/ktext_animation.dart';
 
 /* Use the @Component annotation to indicate that this class is an
@@ -64,10 +62,13 @@ class KTextEditorComponent{
     }
   }
   
+  void animateCurText() {
+    curText.setAnimation(new KTextAnimation.useDefault(curText));
+  }
+  
   void commitCurrentText(Event e){
     if(!curText.registered && !curText.text.isEmpty){
       curText.editing = false;
-      curText.setAnimation(new KTextAnimation(curText, new FadeInTween('${curText.id}-enter', 1000), new FadeOutTween('${curText.id}-leave', 1000), ktctrl.kTexts.length*1000, 2000));
       ktctrl.add(curText);
     }
     if(!curText.text.isEmpty) {
