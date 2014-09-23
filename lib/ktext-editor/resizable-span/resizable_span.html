@@ -2,8 +2,8 @@
       ng-blur="spanCtrl.onBlur($event)"
       ng-click="spanCtrl.onClick($event)"
       style="left: {{spanCtrl.kText.loc.x}}px; 
-                  top: {{spanCtrl.kText.loc.y}}px;
-                  position: absolute;"
+            top: {{spanCtrl.kText.loc.y}}px;
+            position: absolute;"
       tabindex="0">
   <span id="text-span" style="font-family: {{spanCtrl.kText.font}}; 
                   font-size: {{spanCtrl.kText.size}}pt;
@@ -13,6 +13,11 @@
       {{spanCtrl.kText.text}}
       <span id="cursor" class="blinking cursor" ng-if="spanCtrl.kText.editing">|</span>
   </span>
+  <div id="anim-icon" ng-if="spanCtrl.kText.registered && spanCtrl.kText.anim != null">
+    <div style="background-color: {{spanCtrl.kText.timelineColor}}; left:0px"></div>
+    <div style="background-color: {{spanCtrl.kText.timelineColor}}; left:4px; opacity: 0.6;"></div>
+    <div style="background-color: {{spanCtrl.kText.timelineColor}}; left:8px; opacity: 0.2;"></div>
+  </div>
   <div id="handles" style="display: {{spanCtrl.selected ? 'block' : 'none'}};">
       <div id="bbox" style="left: {{spanCtrl.kText.vertical ? -spanCtrl.curSize.x.toInt() : 0}}px; 
                       top: 0px; 

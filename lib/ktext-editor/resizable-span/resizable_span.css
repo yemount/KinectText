@@ -68,6 +68,20 @@
   cursor: nw-resize;
 }
 
+#anim-icon {
+  position: absolute;
+  left: -5px;
+  top: -15px;
+}
+
+#anim-icon div {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+}
+
 #cursor {
 	color: #2E3D48;
 	font-weight: 100;

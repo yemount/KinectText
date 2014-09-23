@@ -1,7 +1,7 @@
 #main-player {
   width: 512px;
   height: 256px;
-  background-color: pink;
+  border: 1px solid #da4336;
   position: relative;
 }
 

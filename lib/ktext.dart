@@ -27,22 +27,25 @@ class KTextController {
     kText.registered = true;
   }
   
-  String getNextId() {
-    return 'ktext${kTexts.length}';
+  int getNextId() {
+    return kTexts.length;
   }
 }
 
 class KText {
+  static List<String> colors = ['#da4336', '#4184f3', '#0e9c57', '#f3b300'];
   String text = '';
   bool vertical = false;
   Point loc;
   Vector2 scale = new Vector2(1.0, 1.0);
   int size;
   String font;
-  String id;
+  int id = -1;
   KTextAnimation anim;
   bool editing = true;
   bool registered = false;
+  String get timelineColor => colors[id % 4];
+  String get idStr => 'ktext${id}';
 
   KText() {
     size = 15;
@@ -64,7 +67,6 @@ class KText {
   
   void setAnimation(KTextAnimation _anim) {
     anim = _anim;
-    print(this.anim == null);
   }
 }
 

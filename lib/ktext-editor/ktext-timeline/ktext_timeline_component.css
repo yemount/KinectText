@@ -1,0 +1,25 @@
+.timeline-container {
+  height: 15px;
+  position: relative;
+}
+
+.baseline {
+  width: 300px;
+  height: 1px;
+}
+
+.timebar {
+  height: 10px;
+  position: absolute;
+  top: -5px;
+}
+
+.timebarHollow {
+  background-color: white;
+  border-style: solid;
+  border-width: 1px;
+  height: 10px;
+  position: absolute;
+  top: -6px;
+  margin-left: -1px;
+}

@@ -33,7 +33,7 @@ class ResizableSpanComponent implements ShadowRootAware{
   
   
   Element get bbox => root.querySelector('#bbox');
-  Element get span => root.querySelector('#text-span');
+  Element get textSpan => root.querySelector('#text-span');
   
   void onShadowRoot(ShadowRoot root) {
     this.root = root;
@@ -41,7 +41,7 @@ class ResizableSpanComponent implements ShadowRootAware{
   
   void onFocus(Event e) {
     selected = true;
-    Rectangle rect = span.getBoundingClientRect();
+    Rectangle rect = textSpan.getBoundingClientRect();
     curSize..x = rect.width
             ..y = rect.height;
     if(!handlersInitialized) {

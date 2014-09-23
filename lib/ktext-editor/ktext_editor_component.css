@@ -4,6 +4,7 @@
   position: absolute;
   left: 520px;
   top: 0px;
+  padding-top: 10px;
 }
 
 #canvas-container {
@@ -13,7 +14,7 @@
 #main-canvas {
   width: 512px;
   height: 256px;
-  background-color: yellow;
+  border: 1px solid #f3b300;
   position: relative;
 }
 

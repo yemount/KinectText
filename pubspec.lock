@@ -100,4 +100,4 @@ packages:
   web_components:
     description: web_components
     source: hosted
-    version: "0.7.0"
+    version: "0.7.0+1"

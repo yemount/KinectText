@@ -22,8 +22,8 @@ class KTextAnimation {
   CssStyleSheet get stylesheet => root.styleSheets[0] as CssStyleSheet;
   
   KTextAnimation.useDefault(this.kText) {
-    enter = new FadeInTween('${kText.id}-enter', 1000);
-    leave = new FadeOutTween('${kText.id}-leave', 1000);
+    enter = new FadeInTween('${kText.idStr}-enter', 1000);
+    leave = new FadeOutTween('${kText.idStr}-leave', 1000);
     startTime = 1*1000;
     lastTime = 2000;
   }
@@ -56,7 +56,7 @@ class KTextAnimation {
   
   void makeDomElement() {
     elem = new SpanElement();
-    elem.id = kText.id;
+    elem.id = kText.idStr;
     elem.classes.add('ktext');
     if(kText.vertical) {
       elem.classes.add('text-vertical');
