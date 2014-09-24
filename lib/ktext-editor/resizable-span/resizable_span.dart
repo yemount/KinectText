@@ -19,7 +19,6 @@ class ResizableSpanComponent implements ShadowRootAware{
   KTextEditorComponent edctrl;
   Vector2 curSize = new Vector2(0.0, 0.0);
   ShadowRoot root;
-  int test = 20;
   
   Point mouseDownLoc;
   Point mouseDownOrigin;
@@ -77,7 +76,7 @@ class ResizableSpanComponent implements ShadowRootAware{
     mouseMoveStream = document.body.onMouseMove.listen((Event e) { 
       Point curMouseLoc = (e as MouseEvent).client;
       Vector2 d = new Vector2(curMouseLoc.x.toDouble() - mouseDownLoc.x, curMouseLoc.y.toDouble() - mouseDownLoc.y);
-      resize(dir, d);
+      //resize(dir, d);
     });
     mouseUpStream = document.body.onMouseUp.listen((Event e) {
       e.stopPropagation();
@@ -92,39 +91,70 @@ class ResizableSpanComponent implements ShadowRootAware{
     mouseDownSize = curSize.clone();
   }
   
-  void resize(String dir, Vector2 d) {
-    double newX = kText.loc.x.toDouble();
-    double newY = kText.loc.y.toDouble();
-    Vector2 newSize = curSize.clone();    
+  void onDrag(movement, msg) {
+    resize(movement, 'nw');
+  }
+  
+  void resize(Point d, String dir) {
+    int newX = kText.loc.x;
+    int newY = kText.loc.y;
+    Vector2 newSize = curSize.clone();
     
     if(dir.contains('n')){
-      newY = mouseDownOrigin.y + d.y;
-      newSize.y = mouseDownSize.y - d.y;
-    }
-    if(dir.contains('w')){
-      newX = mouseDownOrigin.x + (kText.vertical ? 0.0 : d.x);
-      newSize.x = mouseDownSize.x - d.x;
+      newY = kText.loc.y + d.y;
+      newSize.y = curSize.y - d.y;
     }
     if(dir.contains('s')){
-      newSize.y = mouseDownSize.y + d.y;
+      newSize.y = curSize.y + d.y; 
+    }
+    if(dir.contains('w')){
+      // TODO take verticality into account
+      newX = kText.loc.x + d.x;
+      newSize.x = curSize.x - d.x;
     }
     if(dir.contains('e')){
-      newX = mouseDownOrigin.x + (kText.vertical ? d.x : 0.0);
-      newSize.x = mouseDownSize.x + d.x;
-    }
-    if(!dir.contains('n') && !dir.contains('w') && !dir.contains('s') && !dir.contains('e')) {
-      newX = mouseDownOrigin.x + d.x;
-      newY = mouseDownOrigin.y + d.y;
+      newSize.x = curSize.x + d.x;
     }
     
-    kText.scale.x = (mouseDownScale.x / mouseDownSize.x) * newSize.x;
-    kText.scale.y = (mouseDownScale.y / mouseDownSize.y) * newSize.y;
-    
-    curSize.x = newSize.x;
-    curSize.y = newSize.y;
+    kText.scale.x = (kText.scale.x * 1.0 / curSize.x) * newSize.x;
+    kText.scale.y = (kText.scale.y * 1.0 / curSize.y) * newSize.y;
+    curSize = newSize;
     kText.loc = new Point(newX, newY);
   }
   
+//  void resize(String dir, Vector2 d) {
+//    double newX = kText.loc.x.toDouble();
+//    double newY = kText.loc.y.toDouble();
+//    Vector2 newSize = curSize.clone();    
+//    
+//    if(dir.contains('n')){
+//      newY = mouseDownOrigin.y + d.y;
+//      newSize.y = mouseDownSize.y - d.y;
+//    }
+//    if(dir.contains('w')){
+//      newX = mouseDownOrigin.x + (kText.vertical ? 0.0 : d.x);
+//      newSize.x = mouseDownSize.x - d.x;
+//    }
+//    if(dir.contains('s')){
+//      newSize.y = mouseDownSize.y + d.y;
+//    }
+//    if(dir.contains('e')){
+//      newX = mouseDownOrigin.x + (kText.vertical ? d.x : 0.0);
+//      newSize.x = mouseDownSize.x + d.x;
+//    }
+//    if(!dir.contains('n') && !dir.contains('w') && !dir.contains('s') && !dir.contains('e')) {
+//      newX = mouseDownOrigin.x + d.x;
+//      newY = mouseDownOrigin.y + d.y;
+//    }
+//    
+//    kText.scale.x = (mouseDownScale.x / mouseDownSize.x) * newSize.x;
+//    kText.scale.y = (mouseDownScale.y / mouseDownSize.y) * newSize.y;
+//    
+//    curSize.x = newSize.x;
+//    curSize.y = newSize.y;
+//    kText.loc = new Point(newX, newY);
+//  }
+//  
   void deactivate() {
     mouseMoveStream.cancel();
     mouseUpStream.cancel();

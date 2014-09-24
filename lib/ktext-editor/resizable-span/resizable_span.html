@@ -1,14 +1,14 @@
 <span ng-focus="spanCtrl.onFocus($event)" 
       ng-blur="spanCtrl.onBlur($event)"
       ng-click="spanCtrl.onClick($event)"
-      style="left: {{spanCtrl.kText.loc.x}}px; 
-            top: {{spanCtrl.kText.loc.y}}px;
-            position: absolute;"
       tabindex="0">
   <span id="text-span" style="font-family: {{spanCtrl.kText.font}}; 
                   font-size: {{spanCtrl.kText.size}}pt;
                   -webkit-transform-origin: 0% 0%;
-                  -webkit-transform: scale({{spanCtrl.kText.scale.x}}, {{spanCtrl.kText.scale.y}}) rotate({{spanCtrl.kText.vertical ? 90 : 0}}deg)"
+                  -webkit-transform: scale({{spanCtrl.kText.scale.x}}, {{spanCtrl.kText.scale.y}}) rotate({{spanCtrl.kText.vertical ? 90 : 0}}deg);
+                  left: {{spanCtrl.kText.loc.x}}px; 
+                  top: {{spanCtrl.kText.loc.y}}px;
+                  position: absolute;"
           class="ktext"> 
       {{spanCtrl.kText.text}}
       <span id="cursor" class="blinking cursor" ng-if="spanCtrl.kText.editing">|</span>
@@ -23,8 +23,13 @@
                       top: 0px; 
                       width: {{spanCtrl.curSize.x.toInt()}}px; 
                       height: {{spanCtrl.curSize.y.toInt()}}px;">
-        <div id="nw"
-          style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
+        <draggable on-drag="spanCtrl.onDrag($d, 'yes')" >
+          <div>
+          !!!
+          </div>
+        </draggable>
+        <!--div id="nw"
+          style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div!-->
         <div id="n"
           style="left: {{spanCtrl.curSize.x/2-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
         <div id="ne"
