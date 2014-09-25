@@ -6,6 +6,7 @@ import 'dart:html';
 @Component(
     selector: 'draggable',
     cssUrl: 'packages/angular_dart_demo/draggable/draggable.css',
+    templateUrl: 'packages/angular_dart_demo/draggable/draggable.html',
     publishAs: 'ctrl')
 
 class Draggable implements ShadowRootAware{
@@ -17,7 +18,6 @@ class Draggable implements ShadowRootAware{
   Function onDrag;
 
   void onShadowRoot(ShadowRoot root) {
-    root.appendHtml(element.innerHtml);
   }
   
   Draggable(this.element) {

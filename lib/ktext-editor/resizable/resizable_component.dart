@@ -1,24 +1,26 @@
 import 'package:angular/angular.dart';
 import 'dart:html';
-import '../../ktext.dart';
 import 'package:vector_math/vector_math.dart';
 import '../ktext_editor_component.dart';
 
 @Component(
-    selector: 'resizable-span',
-    templateUrl: 'packages/angular_dart_demo/ktext-editor/resizable-span/resizable_span.html',
-    cssUrl: 'packages/angular_dart_demo/ktext-editor/resizable-span/resizable_span.css',
+    selector: 'resizable',
+    templateUrl: 'packages/angular_dart_demo/ktext-editor/resizable/resizable_component.html',
+    cssUrl: 'packages/angular_dart_demo/ktext-editor/resizable/resizable_component.css',
     publishAs: 'spanCtrl')
 class ResizableSpanComponent implements ShadowRootAware{
   final int hoff = 8;
   final int hsize = 6;
   
-  @NgTwoWay('ktext')
-  KText kText;
-  @NgTwoWay('edctrl')
-  KTextEditorComponent edctrl;
+  @NgTwoWay('scale')
+  Vector2 scale;
+  @NgTwoWay('loc')
+  Vector2 loc;
+//  @NgTwoWay('edctrl')
+//  KTextEditorComponent edctrl;
   Vector2 curSize = new Vector2(0.0, 0.0);
   ShadowRoot root;
+  Element elem;
   
   Point mouseDownLoc;
   Point mouseDownOrigin;
@@ -32,7 +34,8 @@ class ResizableSpanComponent implements ShadowRootAware{
   
   
   Element get bbox => root.querySelector('#bbox');
-  Element get textSpan => root.querySelector('#text-span');
+  
+  ResizableSpanComponent(this.elem);
   
   void onShadowRoot(ShadowRoot root) {
     this.root = root;
@@ -40,13 +43,13 @@ class ResizableSpanComponent implements ShadowRootAware{
   
   void onFocus(Event e) {
     selected = true;
-    Rectangle rect = textSpan.getBoundingClientRect();
+    Rectangle rect = elem.getBoundingClientRect();
     curSize..x = rect.width
             ..y = rect.height;
     if(!handlersInitialized) {
       initHandlers();
     }
-    edctrl.select(kText);
+    //edctrl.select(kText);
   }
   
   void onBlur(Event e) {
@@ -72,7 +75,7 @@ class ResizableSpanComponent implements ShadowRootAware{
   }
   
   void activate(Event e, String dir) {
-    saveMouseDownStates(e);
+    //saveMouseDownStates(e);
     mouseMoveStream = document.body.onMouseMove.listen((Event e) { 
       Point curMouseLoc = (e as MouseEvent).client;
       Vector2 d = new Vector2(curMouseLoc.x.toDouble() - mouseDownLoc.x, curMouseLoc.y.toDouble() - mouseDownLoc.y);
@@ -84,24 +87,23 @@ class ResizableSpanComponent implements ShadowRootAware{
     });
   }
   
-  void saveMouseDownStates(Event e) {
-    mouseDownLoc = (e as MouseEvent).client;
-    mouseDownOrigin = kText.loc;
-    mouseDownScale = kText.scale.clone();
-    mouseDownSize = curSize.clone();
-  }
+//  void saveMouseDownStates(Event e) {
+//    mouseDownLoc = (e as MouseEvent).client;
+//    mouseDownOrigin = kText.loc;
+//    mouseDownScale = kText.scale.clone();
+//    mouseDownSize = curSize.clone();
+//  }
   
   void onDrag(movement, msg) {
     resize(movement, 'nw');
   }
   
   void resize(Point d, String dir) {
-    int newX = kText.loc.x;
-    int newY = kText.loc.y;
+    Vector2 newLoc = loc.clone();
     Vector2 newSize = curSize.clone();
     
     if(dir.contains('n')){
-      newY = kText.loc.y + d.y;
+      newLoc.y = loc.y + d.y;
       newSize.y = curSize.y - d.y;
     }
     if(dir.contains('s')){
@@ -109,17 +111,17 @@ class ResizableSpanComponent implements ShadowRootAware{
     }
     if(dir.contains('w')){
       // TODO take verticality into account
-      newX = kText.loc.x + d.x;
+      newLoc.x = loc.x + d.x;
       newSize.x = curSize.x - d.x;
     }
     if(dir.contains('e')){
       newSize.x = curSize.x + d.x;
     }
     
-    kText.scale.x = (kText.scale.x * 1.0 / curSize.x) * newSize.x;
-    kText.scale.y = (kText.scale.y * 1.0 / curSize.y) * newSize.y;
+    scale.x = (scale.x * 1.0 / curSize.x) * newSize.x;
+    scale.y = (scale.y * 1.0 / curSize.y) * newSize.y;
     curSize = newSize;
-    kText.loc = new Point(newX, newY);
+    loc = newLoc;
   }
   
 //  void resize(String dir, Vector2 d) {

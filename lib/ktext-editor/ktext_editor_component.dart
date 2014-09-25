@@ -75,7 +75,9 @@ class KTextEditorComponent{
       curText = new KText();
     }
     if(e.type == "click") {
-      curText.loc = (e as MouseEvent).offset;
+      Point offset = (e as MouseEvent).offset;
+      curText.loc..x = offset.x.toDouble()
+                ..y = offset.y.toDouble();
     }
   }
   

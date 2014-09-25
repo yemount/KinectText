@@ -3,9 +3,13 @@
                         ng-blur="editor.onBlur($event)"
                         ng-keypress="editor.onKeyUp($event)" 
                         tabindex="1">
-    <resizable-span ktext="editor.curText" edctrl="editor" ng-if="!editor.curText.registered"></resizable-span>
+    <resizable scale="editor.curText.scale" loc="editor.curText.loc" ng-if="!editor.curText.registered">
+      <span>{{editor.curText.text}}</span>
+    </resizable>
     <div id="text-container">
-      <resizable-span ng-repeat="kText in editor.ktctrl.kTexts" ktext="kText" edctrl="editor"></resizable-span>
+      <resizable ng-repeat="kText in editor.ktctrl.kTexts" scale="kText.scale" loc="kText.loc">
+        <span>{{kText.text}}</span>
+      </resizable>
     </div>
   </div>
   <div id="timeline-container">
