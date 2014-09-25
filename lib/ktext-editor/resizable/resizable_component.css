@@ -1,12 +1,7 @@
-.ktext {
+#content-container {
   position: absolute;
+  border: 1px dashed black;
 }
-
-#text-span {
-  display: inline-block;
-  white-space: nowrap;
-}
-
 
 .text-vertical{
   -webkit-transform: rotate(90deg);

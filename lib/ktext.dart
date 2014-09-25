@@ -1,7 +1,6 @@
 library ktext_controller;
 
 import 'package:angular/angular.dart';
-import 'dart:html';
 import 'ktext-animation/ktext_animation.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -32,12 +31,15 @@ class KTextController {
   }
 }
 
-class KText {
+abstract class Resizable {
+  Vector2 loc = new Vector2(-100.0, -100.0);
+  Vector2 scale = new Vector2(1.0, 1.0);
+}
+
+class KText extends Resizable{
   static List<String> colors = ['#da4336', '#4184f3', '#0e9c57', '#f3b300'];
   String text = '';
   bool vertical = false;
-  Point loc;
-  Vector2 scale = new Vector2(1.0, 1.0);
   int size;
   String font;
   int id = -1;
@@ -50,7 +52,6 @@ class KText {
   KText() {
     size = 15;
     font = 'Electrolize';
-    loc = new Point(-100, -100);
     text = '';
   }
     

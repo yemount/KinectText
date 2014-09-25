@@ -7,6 +7,7 @@ import 'dart:html';
     selector: '[on-drag]')
 
 class Draggable{
+
   final Element element;
   var mouseMoveStream;
   var mouseUpStream;
