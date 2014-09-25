@@ -3,22 +3,16 @@ library draggable;
 import 'package:angular/angular.dart';
 import 'dart:html';
 
-@Component(
-    selector: 'draggable',
-    cssUrl: 'packages/angular_dart_demo/draggable/draggable.css',
-    publishAs: 'ctrl')
+@Decorator(
+    selector: '[on-drag]')
 
-class Draggable implements ShadowRootAware{
+class Draggable{
   final Element element;
   var mouseMoveStream;
   var mouseUpStream;
   
   @NgCallback('on-drag')
   Function onDrag;
-
-  void onShadowRoot(ShadowRoot root) {
-    root.appendHtml(element.innerHtml);
-  }
   
   Draggable(this.element) {
     element.onMouseDown.listen((event) {
