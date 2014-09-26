@@ -11,7 +11,6 @@
 .timebar {
   height: 10px;
   position: absolute;
-  top: -5px;
 }
 
 .timebarHollow {
@@ -20,6 +19,4 @@
   border-width: 1px;
   height: 10px;
   position: absolute;
-  top: -6px;
-  margin-left: -1px;
 }

@@ -23,6 +23,7 @@ class KTextController {
   void add(KText kText) {
     kText.id = getNextId();
     kTexts.add(kText);
+    kText.editing = false;
     kText.registered = true;
   }
   
@@ -34,12 +35,13 @@ class KTextController {
 abstract class Resizable {
   Vector2 loc = new Vector2(-100.0, -100.0);
   Vector2 scale = new Vector2(1.0, 1.0);
+  bool vertical = false;
+  String timelineColor;
 }
 
 class KText extends Resizable{
   static List<String> colors = ['#da4336', '#4184f3', '#0e9c57', '#f3b300'];
   String text = '';
-  bool vertical = false;
   int size;
   String font;
   int id = -1;
@@ -58,7 +60,7 @@ class KText extends Resizable{
   KText.fromKText(KText kText) {
     this..font = kText.font
         ..size = kText.size
-        ..loc = kText.loc;
+        ..vertical = kText.vertical;
   }
   
   // TODO: set animation with params

@@ -1,42 +1,31 @@
-<span ng-focus="spanCtrl.onFocus($event)" 
-      ng-blur="spanCtrl.onBlur($event)"
-      ng-click="spanCtrl.onClick($event)"
+<span ng-focus="ctrl.onFocus($event)" 
+      ng-blur="ctrl.onBlur($event)"
+      ng-click="ctrl.onClick($event)"
       tabindex="0">
   <div id="content-container" 
-       style="left: {{spanCtrl.loc.x}}px; 
-              top: {{spanCtrl.loc.y}}px; 
-              width: {{spanCtrl.curSize.x}}px;
-              height: {{spanCtrl.curSize.y}}px;
+       style="left: {{ctrl.target.loc.x}}px; 
+              top: {{ctrl.target.loc.y}}px; 
               -webkit-transform-origin: 0% 0%;
-              -webkit-transform: scale({{spanCtrl.scale.x}}, {{spanCtrl.scale.y}});">
+              -webkit-transform: scale({{ctrl.target.scale.x}}, {{ctrl.target.scale.y}}) rotate({{ctrl.target.vertical ? 90 : 0}}deg);">
     <content></content>
   </div>
-  <div id="handles" style="display: {{spanCtrl.selected ? 'block' : 'none'}};">
-      <div id="bbox" style="left: {{true ? -spanCtrl.curSize.x.toInt() : 0}}px; 
-                      top: 0px; 
-                      width: {{spanCtrl.curSize.x.toInt()}}px; 
-                      height: {{spanCtrl.curSize.y.toInt()}}px;">
-        <draggable on-drag="spanCtrl.onDrag($d, 'yes')" >
-          <div>
-          !!!
-          </div>
-        </draggable>
-        <!--div id="nw"
-          style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div!-->
-        <div id="n"
-          style="left: {{spanCtrl.curSize.x/2-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
-        <div id="ne"
-          style="left: {{spanCtrl.curSize.x+spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
-        <div id="e"
-          style="left: {{spanCtrl.curSize.x+spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y/2-spanCtrl.hsize/2}}px;"></div>
-        <div id="se"
-          style="left: {{spanCtrl.curSize.x+spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y+spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
-        <div id="s"
-          style="left: {{spanCtrl.curSize.x/2-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y+spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
-        <div id="sw"
-          style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y+spanCtrl.hoff-spanCtrl.hsize/2}}px;"></div>
-        <div id="w"
-          style="left: {{-spanCtrl.hoff-spanCtrl.hsize/2}}px; top: {{spanCtrl.curSize.y/2-spanCtrl.hsize/2}}px;"></div>
-      </div>
+  <div id="bbox" 
+       style="left: {{ctrl.target.loc.x-(ctrl.target.vertical ? ctrl.curSize.x : 0)}}px; 
+              top: {{ctrl.target.loc.y}}px; 
+              width: {{ctrl.curSize.x}}px;
+              height: {{ctrl.curSize.y}}px;
+              border: {{ctrl.selected? '1px dashed black' : 'none'}}"
+        on-drag="ctrl.onDrag($e, $d, 'c')">
+    <content></content>
+    <div id="handles" style="display: {{ctrl.selected ? 'block' : 'none'}};">
+      <div id="nw" on-drag="ctrl.onDrag($e, $d, 'nw')" style="left: {{-ctrl.hoff-ctrl.hsize/2}}px; top: {{-ctrl.hoff-ctrl.hsize/2}}px;"></div>
+      <div id="n" on-drag="ctrl.onDrag($e, $d, 'n')" style="left: {{ctrl.curSize.x/2-ctrl.hsize/2}}px; top: {{-ctrl.hoff-ctrl.hsize/2}}px;"></div>
+      <div id="ne" on-drag="ctrl.onDrag($e, $d, 'ne')" style="left: {{ctrl.curSize.x+ctrl.hoff-ctrl.hsize/2}}px; top: {{-ctrl.hoff-ctrl.hsize/2}}px;"></div>
+      <div id="e" on-drag="ctrl.onDrag($e, $d, 'e')" style="left: {{ctrl.curSize.x+ctrl.hoff-ctrl.hsize/2}}px; top: {{ctrl.curSize.y/2-ctrl.hsize/2}}px;"></div>
+      <div id="se" on-drag="ctrl.onDrag($e, $d, 'se')" style="left: {{ctrl.curSize.x+ctrl.hoff-ctrl.hsize/2}}px; top: {{ctrl.curSize.y+ctrl.hoff-ctrl.hsize/2}}px;"></div>
+      <div id="s" on-drag="ctrl.onDrag($e, $d, 's')" style="left: {{ctrl.curSize.x/2-ctrl.hsize/2}}px; top: {{ctrl.curSize.y+ctrl.hoff-ctrl.hsize/2}}px;"></div>
+      <div id="sw" on-drag="ctrl.onDrag($e, $d, 'sw')" style="left: {{-ctrl.hoff-ctrl.hsize/2}}px; top: {{ctrl.curSize.y+ctrl.hoff-ctrl.hsize/2}}px;"></div>
+      <div id="w" on-drag="ctrl.onDrag($e, $d, 'w')" style="left: {{-ctrl.hoff-ctrl.hsize/2}}px; top: {{ctrl.curSize.y/2-ctrl.hsize/2}}px;"></div>
     </div>
+  </div>
 </span>

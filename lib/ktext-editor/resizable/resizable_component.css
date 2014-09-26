@@ -1,6 +1,17 @@
 #content-container {
   position: absolute;
-  border: 1px dashed black;
+}
+
+#bbox {
+  position: absolute;
+}
+
+
+#handles div {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  position: absolute;
 }
 
 .text-vertical{
@@ -18,17 +29,6 @@
 
 *:focus {
     outline: 0;
-}
-
-#bbox div {
-  background-color: red;
-  width: 10px;
-  height: 10px;
-  position: absolute;
-}
-
-#handles {
-  position: absolute;
 }
 
 #n {
@@ -61,81 +61,4 @@
 
 #nw {
   cursor: nw-resize;
-}
-
-#anim-icon {
-  position: absolute;
-  left: -5px;
-  top: -15px;
-}
-
-#anim-icon div {
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  position: absolute;
-  top: 0px;
-}
-
-#cursor {
-	color: #2E3D48;
-	font-weight: 100;
-}
-
-#cursor.blinking {
-  -webkit-animation: 1s blink step-end infinite;
-  -moz-animation: 1s blink step-end infinite;
-  -ms-animation: 1s blink step-end infinite;
-  -o-animation: 1s blink step-end infinite;
-  animation: 1s blink step-end infinite;
-}
-
-
-@keyframes "blink" {
-	from,to {
-	color: transparent;
-}
- 50% {
-    color: black;
- }
-
-}
-
-@-moz-keyframes blink {
-	from,to {
-	color: transparent;
-}
- 50% {
-   color: black;
- }
-
-}
-
-@-webkit-keyframes "blink" {
-	from,to {
-	color: transparent;
-}
- 50% {
-   color: black;
- }
-
-}
-
-@-ms-keyframes "blink" {
-	from,to {
-	color: transparent;
-}
- 50% {
-   color: black;
- }
-
-}
-
-@-o-keyframes "blink" {
-	from,to {
-	color: transparent;
-}
- 50% {
-   color: black;
- }
 }

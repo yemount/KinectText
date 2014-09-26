@@ -3,12 +3,23 @@
                         ng-blur="editor.onBlur($event)"
                         ng-keypress="editor.onKeyUp($event)" 
                         tabindex="1">
-    <resizable scale="editor.curText.scale" loc="editor.curText.loc" ng-if="!editor.curText.registered">
-      <span>{{editor.curText.text}}</span>
-    </resizable>
+    <div id="cur-text-container" style="left: {{editor.curText.loc.x}}px; 
+                                        top: {{editor.curText.loc.y}}px;
+                                        -webkit-transform-origin: 0% 0%;
+                                        -webkit-transform: rotate({{editor.curText.vertical ? 90 : 0}}deg);" 
+         ng-if="!editor.curText.registered && editor.curText.editing">
+      <span style="font-family: {{editor.curText.font}}; 
+                  font-size: {{editor.curText.size}}pt;">{{editor.curText.text}}</span>
+      <span id="cursor" 
+            style="display: {{editor.curText.registered ? 'none' : 'inline-block'}};
+                   font-size: {{editor.curText.size}}pt;">|</span>
+    </div>
     <div id="text-container">
-      <resizable ng-repeat="kText in editor.ktctrl.kTexts" scale="kText.scale" loc="kText.loc" tabindex="0">
-        <span>{{kText.text}}</span>
+      <resizable ng-repeat="kText in editor.ktctrl.kTexts"
+                resizable="kText"  
+                select="editor.select(kText)" tabindex="0">
+        <span style="font-family: {{kText.font}}; 
+                     font-size: {{kText.size}}pt;">{{kText.text}}</span>
       </resizable>
     </div>
   </div>
@@ -33,7 +44,7 @@
     <button ng-click="editor.decreaseFontSize()">-</button>
   </div>
   <div>
-    font orientation: vertical <input type="checkbox" ng-change="editor.changeTextOrientation()">
+    font orientation: vertical <input type="checkbox" ng-model="editor.curText.vertical">
   </div>
   <div>
     <button ng-if="editor.curText.registered" ng-click="editor.animateCurText()">Animate</button>

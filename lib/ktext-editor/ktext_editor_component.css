@@ -18,6 +18,10 @@
   position: relative;
 }
 
+#cur-text-container {
+  position: absolute;
+}
+
 #cursor {
 	color: #2E3D48;
 	font-weight: 100;

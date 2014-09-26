@@ -21,6 +21,7 @@ class Draggable{
         Point movement = (event as MouseEvent).movement;
         if(onDrag != null) {
           onDrag({
+            '\$e': event,
             '\$d': movement
           });
         }
