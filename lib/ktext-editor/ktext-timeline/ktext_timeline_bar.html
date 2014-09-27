@@ -1,0 +1,8 @@
+<div id="bar" style="background-color: {{ctrl.anim.color}}; 
+            opacity: {{ctrl.opacity}}; 
+            left: {{ctrl.left}}px; 
+            width: {{ctrl.width}}px;"
+            on-drag="ctrl.onDrag($e, $d, 'c')">
+  <div class="handle" on-drag="ctrl.onDrag($e, $d, 'l')" style="left: 0px;"></div>
+  <div class="handle" on-drag="ctrl.onDrag($e, $d, 'r')" style="right: -5px;" ng-if="ctrl.tweenIdx==2"></div>
+</div>

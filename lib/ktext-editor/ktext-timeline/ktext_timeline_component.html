@@ -1,16 +1,7 @@
 <div class="ctrl-container">
-  <div class="baseline" ng-style="{'background-color': ctrl.kText.timelineColor}">
+  <div class="baseline" ng-style="{'background-color': ctrl.kText.anim.color}">
+    <ktext-timebar anim="ctrl.kText.anim" tween-idx="0" timeline-range="ctrl.range"></ktext-timebar>
+    <ktext-timebar anim="ctrl.kText.anim" tween-idx="1" timeline-range="ctrl.range"></ktext-timebar>
+    <ktext-timebar anim="ctrl.kText.anim" tween-idx="2" timeline-range="ctrl.range"></ktext-timebar>
   </div>
-  <resizable resizable="ctrl.enterBar">
-    <div id="enterBar" class="timebarHollow" 
-      style="width: {{ctrl.enterBar.width}}px; border-color: {{ctrl.kText.timelineColor}}"></div>
-  </resizable>
-  <resizable resizable="ctrl.midBar">
-    <div id="midBar" class="timebar" 
-      style="width: {{ctrl.midBar.width}}px; background-color: {{ctrl.kText.timelineColor}}"></div>
-  </resizable>
-  <resizable resizable="ctrl.leaveBar">
-    <div id="leaveBar" class="timebarHollow" 
-      style="width: {{ctrl.leaveBar.width}}px; border-color: {{ctrl.kText.timelineColor}}"></div>
-  </resizable>
 </div>

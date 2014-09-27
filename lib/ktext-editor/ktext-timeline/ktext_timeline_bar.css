@@ -1,0 +1,16 @@
+div {
+  position: absolute;
+  top: -5px;
+  height: 10px;
+  cursor: move;
+}
+
+.handle {
+  border-radius: 50%;
+  position: absolute;
+  margin-left: -5px;
+  margin-top: 5px;
+  width: 10px;
+  height: 10px;
+  cursor: col-resize;
+}

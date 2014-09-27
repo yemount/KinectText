@@ -6,6 +6,8 @@
 .baseline {
   width: 300px;
   height: 1px;
+  margin-bottom: 15px;
+  position: relative;
 }
 
 .timebar {

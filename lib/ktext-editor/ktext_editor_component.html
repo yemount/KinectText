@@ -25,7 +25,7 @@
   </div>
   <div id="timeline-container">
     <div ng-repeat="kText in editor.ktctrl.kTexts" >
-      <ktext-timeline ktext="kText" max-time="editor.ktctrl.maxTime" ng-if="kText.anim != null"></ktext-timeline>
+      <ktext-timeline ktext="kText" ng-if="kText.anim != null"></ktext-timeline>
     </div>
   </div>
 </div>

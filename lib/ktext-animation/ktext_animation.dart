@@ -16,10 +16,12 @@ class KTextAnimation {
   KTextTween leave;
   KText kText;
   Element elem;
+  String color;
   static ShadowRoot root;
   Element get parent => root.querySelector('#main-player');
   // all css manipulation needs to be done to the shadowroot stylesheet
   CssStyleSheet get stylesheet => root.styleSheets[0] as CssStyleSheet;
+  var animationEndListener;
   
   KTextAnimation.useDefault(this.kText) {
     enter = new FadeInTween('${kText.idStr}-enter', 1000);
@@ -33,19 +35,23 @@ class KTextAnimation {
   void playEnterAnim() {
     elem.classes.add("enter");
     parent.append(elem);
-    injectAnim(true);
-    elem.on['animationend'].listen((Event e) {
+    List<int> hashes = injectAnim(true);
+    animationEndListener = elem.on['animationend'].listen((Event e) {
+      animationEndListener.cancel();
       elem.classes.remove("enter");      
       new Future.delayed(new Duration(milliseconds: lastTime), () => playLeaveAnim());
+      hashes.forEach((hash) => removeAnim(hash));
     });
   }
   
   void playLeaveAnim() {
     elem.classes.add("leave");
-    injectAnim(false);
-    elem.on['animationend'].listen((Event e) {
+    List<int> hashes = injectAnim(false);
+    animationEndListener = elem.on['animationend'].listen((Event e) {
+      animationEndListener.cancel();
       elem.classes.remove('leave');
       elem.remove();
+      hashes.forEach((hash) => removeAnim(hash));
     });    
   }
   
@@ -70,19 +76,32 @@ class KTextAnimation {
               ..transform = 'scale(${kText.scale.x}, ${kText.scale.y}) rotate(${kText.vertical ? 90 : 0}deg)';
   }
   
-  void injectAnim(bool isEnter){
+  List<int> injectAnim(bool isEnter) {
+    int animHash, keyHash;
     KTextTween tween = isEnter ? enter : leave;
     String head = '#${elem.id}.${isEnter ? 'enter' : 'leave'}';
     String body = '-webkit-animation: ${tween.name} ${tween.duration}ms';
-    injectCssRule(head, body);
+    animHash = injectCssRule(head, body);
     
     String keyframeHead = '@-webkit-keyframes ${tween.name}';
     String keyframeBody = tween.keyframesToString();
-    injectCssRule(keyframeHead, keyframeBody);
+    keyHash = injectCssRule(keyframeHead, keyframeBody);
+    return [animHash, keyHash];
   }
   
-  void injectCssRule(String head, String body) {
+  void removeAnim(int hash) {
+    for(int i = 0; i < stylesheet.cssRules.length; i++) {
+      var rule = stylesheet.cssRules[i];
+      if(rule.hashCode == hash) {
+        stylesheet.removeRule(i);
+        return;
+      }
+    }
+  }
+  
+  int injectCssRule(String head, String body) {
     stylesheet.insertRule('${head} { ${body} }', 0);
+    return stylesheet.rules.first.hashCode;
   }
   
   // iterate through all CSS rules to find and remove one with matching tag name
