@@ -1,8 +1,6 @@
 library timeline;
 
 import 'package:angular/angular.dart';
-import 'package:vector_math/vector_math.dart';
-import 'dart:html';
 import '../../ktext.dart';
 
 @Component(

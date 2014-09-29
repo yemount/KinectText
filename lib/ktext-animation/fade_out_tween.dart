@@ -1,14 +1,10 @@
 library fade_out_tween;
 import 'ktext_tween.dart';
+import '../ktext.dart';
 
 class FadeOutTween extends KTextTween {
-  int duration;
-  String name;
   
-  FadeOutTween(String name, int duration): super(name, duration) {
-    this.name = name;
-    this.duration = duration;
-  }
+  FadeOutTween(int duration, KText ktext): super(duration, ktext) {  }
   
   String keyframesToString() {
     return 'from { opacity: 1;} to {opacity: 0;}';

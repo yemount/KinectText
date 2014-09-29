@@ -1,10 +1,12 @@
 library ktext_tween;
 
+import '../ktext.dart';
+
 abstract class KTextTween {
   int duration;
-  String name;
+  KText kText;
   
-  KTextTween(this.name, this.duration);
+  KTextTween(this.duration, this.kText);
   
   String keyframesToString();
 }

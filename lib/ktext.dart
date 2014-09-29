@@ -46,6 +46,7 @@ class KText extends Resizable{
   String font;
   
   int id = -1;
+  bool cbc = true; // character by character
   
   KTextAnimation anim;
   bool editing = true;
